@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  _ProfileScreenState createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
@@ -25,7 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: CircularProgressIndicator(),
             );
           } else if (state is ProfileUploading) {
-            return const Center(
+            return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -38,7 +38,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
             );
           } else if (state is ProfileError) {
             return Center(
-              child: Text(state.error),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Error: ${state.error}'),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<ProfileCubit>().pickImageAndUploadToFireStoreDataBase();
+                    },
+                    child: Text('Retry'),
+                  ),
+                ],
+              ),
             );
           } else if (state is ProfileLoaded) {
             return Padding(
@@ -49,9 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   InkWell(
                     onTap: () {
-                      context
-                          .read<ProfileCubit>()
-                          .pickImageAndUploadToFireStoreDataBase();
+                      context.read<ProfileCubit>().pickImageAndUploadToFireStoreDataBase();
                     },
                     child: CircleAvatar(
                       radius: 80,
@@ -80,6 +89,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     content: state.userData.uid,
                     icon: Icons.person_pin,
                   ),
+                  // Add more profile information as needed
                 ],
               ),
             );

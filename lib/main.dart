@@ -8,19 +8,24 @@ import 'package:finalpro/home_screen.dart';
 import 'package:finalpro/observer.dart';
 import 'package:finalpro/screens/Auth_screens/login_screen.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   try {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
+
     );
+
   } catch (e) {
     print('Failed to initialize Firebase: $e');
     // Handle initialization failure gracefully
     // You might want to display an error message to the user
     return;
+
   }
+
 
   Bloc.observer = MyBlocObserver();
   runApp(

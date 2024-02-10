@@ -2,7 +2,6 @@ import 'package:finalpro/cubits/app_cubit.dart';
 import 'package:finalpro/cubits/profile_cubit.dart';
 import 'package:finalpro/screens/Auth_screens/login_screen.dart';
 import 'package:finalpro/screens/first_screen.dart';
-import 'package:finalpro/screens/grid_view_screen.dart';
 import 'package:finalpro/screens/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +20,7 @@ class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
 
   List<Widget> screens = [
-    const HomeScreenOne(),
-    const GridViewOfProductsScreen(),
+    const HomeScreen(),
     const ProfileScreen(),
   ];
 
@@ -35,8 +33,7 @@ class _HomePageState extends State<HomePage> {
         ),
         BlocProvider(
           create: (context) {
-            const picker = null;
-            final cubit = ProfileCubit(picker: picker);
+            final cubit = ProfileCubit();
 
             cubit.getUserDataFromFireStoreDataBase();
             return cubit;
@@ -93,16 +90,7 @@ class _HomePageState extends State<HomePage> {
                   Icons.home,
                 ),
                 label: 'Home'),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.shopping_cart,
-                ),
-                label: 'Products'),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.add_shopping_cart_sharp,
-                ),
-                label: 'Products2'),
+
             BottomNavigationBarItem(
                 icon: Icon(
                   Icons.person,

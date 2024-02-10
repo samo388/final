@@ -9,9 +9,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
-  final ImagePicker picker;
 
-  ProfileCubit({required this.picker}) : super(ProfileInitial());
+
+  ProfileCubit() : super(ProfileInitial());
 
   Future<void> getUserDataFromFirestore() async {
     try {
@@ -26,8 +26,8 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(ProfileError(error: 'Error fetching user data: $error'));
     }
   }
-
-  Future<void> pickImageAndUpload() async {
+  ImagePicker picker = ImagePicker();
+  Future<void> pickImageAndUploadToFireStoreDataBase() async {
     try {
       final XFile? image = await picker.pickImage(source: ImageSource.gallery);
       if (image != null) {
@@ -61,7 +61,13 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
-  void pickImageAndUploadToFireStoreDataBase() {}
+  // Placeholder for method implementation
+  Future<void> getUserDataFromFireStoreDataBase() async {
+    await getUserDataFromFirestore();
+  }
 
-  getUserDataFromFireStoreDataBase() {}
+  // Placeholder for method implementation
+  Future<void> pickImageAndUpload() async {
+    await pickImageAndUploadToFireStoreDataBase();
+  }
 }
